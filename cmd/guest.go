@@ -8,26 +8,24 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // guestCmd represents the guest command
 var guestCmd = &cobra.Command{
-	Use:   "guest [name]",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "guest",
+	Short: "Enter on server",
+	Long:  `.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Init a talk how guest")
+		fmt.Println("Init a talk how guest", args)
+		username := viper.GetString("user")
+		fmt.Println("Welcome", username)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(guestCmd)
-
+	guestCmd.Flags().String("user", "", "Name to showed in network!")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
