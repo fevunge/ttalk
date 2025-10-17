@@ -1,6 +1,6 @@
 /*
 Package cmd
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright © 2025 FERNANDO VUNGE <fevunge@outlook.com>
 */
 package cmd
 
@@ -10,17 +10,28 @@ import (
 	"os"
 	"strings"
 
+	gloss "github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
+var headStyle = gloss.NewStyle().Foreground(gloss.Color("99"))
+
 var (
 	cfgFile string
 	rootCmd = &cobra.Command{
-		Use:   "myapp",
+		Use:   "ttalk",
 		Short: "A demo application for Cobra and Viper",
 		// PersistentPreRunE is called after flags are parsed but before the
 		// command's RunE function is called.
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(headStyle.Render(` _____ _____     _ _    
+|_   _|_   _|_ _| | | __
+  | |   | |/ _' | | |/ /
+  | |   | | (_| | |   < 
+  |_|   |_|\__,_|_|_|\_\
+`))
+		},
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			return initializeConfig(cmd)
 		},
@@ -81,6 +92,6 @@ func initializeConfig(cmd *cobra.Command) error {
 	}
 
 	// This is an optional but useful step to debug your config.
-	fmt.Println("Configuration initialized. Using config file:", viper.ConfigFileUsed())
+	fmt.Println("...load file", viper.ConfigFileUsed())
 	return nil
 }
