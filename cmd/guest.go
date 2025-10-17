@@ -5,8 +5,8 @@ Copyright © 2025 Fernando Vunge <fevunge.outlook.com>
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/gdamore/tcell/v2"
+	"github.com/rivo/tview"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -17,15 +17,20 @@ var guestCmd = &cobra.Command{
 	Short: "Enter on server",
 	Long:  `.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Init a talk how guest", args)
-		username := viper.GetString("user")
-		fmt.Println("Welcome", username)
+		app := tview.NewApplication()
+		name := viper.GetString("name")
+		box := tview.NewBox().SetBorder(true).SetTitle(name)
+		nameTextArea := tview.NewTextArea().SetPlaceholder("murfer drone")
+		box.SetBorderColor(tcell.Color112)
+		if err := app.SetRoot(box, false).Run(); err != nil {
+			panic(err)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(guestCmd)
-	guestCmd.Flags().String("user", "", "Name to showed in network!")
+	guestCmd.Flags().String("name", "fevunge", "Name to showed in network!")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
