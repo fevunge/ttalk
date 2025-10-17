@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	gloss "github.com/charmbracelet/lipgloss"
@@ -88,14 +89,17 @@ var guestCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		app := tea.NewProgram(initialModel())
 		app.Run()
-		name := viper.GetString("name")
-		fmt.Println(name)
+		username := viper.GetString("name")
+		if strings.Compare(username, "fevunge") == 0 {
+			fmt.Println("Pegou do arquivos")
+		}
+		fmt.Println(username)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(guestCmd)
-	guestCmd.Flags().String("name", "fevunge", "Name to showed in network!")
+	guestCmd.Flags().String("name", "asd", "Name to showed in network!")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
